@@ -24,6 +24,11 @@ def deneme():
 
 @index_bp.route('/quiz', methods=['GET', 'POST'])
 def quiz():
+    
+    # Tercihen quiz sadece bir kez cevaplanabilmelidir. Bunu veritabanına ekleyeceğiniz bir db.Boolean()
+    # sütunu ile kontrol edebilirsiniz.
+    
+    # siz soruları veritabanından almalısınız
     questions = [
         {'question': 'Aşağıdakilerden hangisi meyve değildir?', 
          'alternative_a': 'Elma',
@@ -57,6 +62,8 @@ def quiz():
                 if request.form[answer_name] == item['answer']:
                     correct_answer_number += 1
                     score += item['point']
+
+        # siz soruları verilen yanıtlar ile aldığı puan veritabanına kaydedilmelidir.
 
         return render_template('index/quiz_score.html', title="Test Puanı", answer_number=answer_number, correct_answer_number=correct_answer_number, score=score)
             
