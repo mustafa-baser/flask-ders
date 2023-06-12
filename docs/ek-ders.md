@@ -41,4 +41,4 @@ ekleyin ve bunu template gönderin:
 
 Şimdi tarayıcıda şu şekilde görünecektir. 
 
-![Dosya Listeleme](docs/img/dosya_listesi.png)
+![Dosya Listeleme](img/dosya_listesi.png)
