@@ -89,3 +89,19 @@ def delete(filename):
 
 Aslında silmeden önce javascript ile silinmesinden emin olup olmadığını sormak gerekir. Bunu yapabilirmisiniz?
 
+## Video Oynatma
+
+flask static dosyaları `static` klasöründen tarayıcıya gönderir. Bu klasöre şu dosyayı kaydedelim `Big_Buck_Bunny.mp4` (https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_5MB.mp4)
+
+Bu videoyu `microblog/templates/index/index.html` dosyasında aşağıdaki gibi gösterebiliriz:
+
+```
+<video width="400" controls>
+  <source src="static/Big_Buck_Bunny.mp4" type="video/mp4">
+  Tarayıcınız video göstermeyi desteklemiyor
+</video>
+```
+
+Anasayfa aşağıdaki gibi görünmelidir:
+
+![Video Gösterme](img/video_gosterme.png)
