@@ -45,10 +45,11 @@ def quiz():
     ]
 
     form = QuizForm()
-    score = 0
-    answer_number = 0
-    correct_answer_number = 0
+
     if request.method == 'POST':
+        score = 0
+        answer_number = 0
+        correct_answer_number = 0
         for i, item in enumerate(questions):
             answer_name = 'answer-{}'.format(i)
             if answer_name in request.form:
