@@ -12,4 +12,20 @@
         </div>
     </div>
 
+
+  <table class="table table-condensed">
+  <thead><th>Dosya Adı</th><th>Boyut (Kb)</th><th>Yükleme Tarihi</th><th></th></thead>
+
+  {% for file_path in user_files_path.glob('*') %}
+    <tr>
+      <td>{{ file_path.relative_to(current_user.upload_dir) }}</td>
+      <td>{{ file_path.stat().st_size}}</td>
+      <td>{{ file_path.stat().st_mtime | get_time }}</td>
+      <td><a href="#"><span class="glyphicon glyphicon-download-alt"></span></a></td>
+      <td><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+    </tr>
+  {% endfor %}
+
+  </table>
+
 {% endblock %}

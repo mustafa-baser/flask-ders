@@ -1,4 +1,5 @@
 import os
+import time
 from flask import Flask
 
 from microblog.errors import error_bp
@@ -28,5 +29,9 @@ def create_app():
     app.register_blueprint(mail_bp, url_prefix='/mail')
     app.register_blueprint(files_bp, url_prefix='/files')
 
+    
+    @app.template_filter()
+    def get_time(timestamp):
+        return time.ctime(timestamp)
 
     return app

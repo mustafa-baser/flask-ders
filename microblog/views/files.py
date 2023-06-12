@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from flask import Blueprint, render_template, request, current_app, flash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
@@ -23,4 +24,6 @@ def index():
             uploaded_file.save(file_path)
             flash("Dosya {} kaydedildi".format(file_name))
 
-    return render_template('files/index.html', title=title, form=form)
+    user_files_path = Path(current_user.upload_dir)
+
+    return render_template('files/index.html', title=title, form=form, user_files_path=user_files_path)
