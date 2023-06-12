@@ -8,6 +8,12 @@
       <p>Son iletilerim, <a href="{{url_for('message.new', next=url_for('index.index'))}}">Yeni ileti Oluştur</a></p>
     </div>
 
+
+    <video width="400" controls>
+      <source src="static/Big_Buck_Bunny.mp4" type="video/mp4">
+      Tarayıcınız video göstermeyi desteklemiyor
+    </video>
+
     {% for post in posts %}
     
     <div class="panel panel-default">
@@ -18,6 +24,8 @@
     {% endfor %}
 
 {{deneme(posts)}}
+
+
 
 {% endblock %}
 
