@@ -42,3 +42,29 @@ ekleyin ve bunu template gönderin:
 Şimdi tarayıcıda şu şekilde görünecektir. 
 
 ![Dosya Listeleme](img/dosya_listesi.png)
+
+### İndirme linki
+Önce `microblog/views/files.py` dosyasında `flask` modülünden şu nedneleri içerelim `send_from_directory, redirect, url_for`:
+
+```
+from flask import Blueprint, render_template, request, current_app, flash,\
+    send_from_directory, redirect, url_for
+```
+
+Bu dosyaya aşağıdaki fonksiyonu yazalım:
+
+```
+@files_bp.route('/download/<filename>')
+@login_required
+def download(filename):
+    if os.path.exists(os.path.join(current_user.upload_dir, filename)):
+        return send_from_directory(current_user.upload_dir, filename)
+    else:
+        flash("Böyle bir dosya yok")
+        return redirect(url_for('files.index'))
+```
+`microblog/microblog/views/files/index.html` dosyasında indirme linkini aşağıdaki gibi düzenleyelim:
+
+`<a href="{{url_for('files.download', filename=file_path.relative_to(current_user.upload_dir))}}#"><span class="glyphicon glyphicon-download-alt"></span></a>`
+
+
