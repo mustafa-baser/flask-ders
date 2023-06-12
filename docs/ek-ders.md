@@ -65,6 +65,27 @@ def download(filename):
 ```
 `microblog/microblog/views/files/index.html` dosyasında indirme linkini aşağıdaki gibi düzenleyelim:
 
-`<a href="{{url_for('files.download', filename=file_path.relative_to(current_user.upload_dir))}}#"><span class="glyphicon glyphicon-download-alt"></span></a>`
+`<a href="{{url_for('files.download', filename=file_path.relative_to(current_user.upload_dir))}}"><span class="glyphicon glyphicon-download-alt"></span></a>`
 
+### Silme linki
+
+`microblog/views/files.py` dosyasına aşağıdaki fonksiyonu ekleyelim:
+
+```
+@files_bp.route('/delete/<filename>')
+@login_required
+def delete(filename):
+    file_path = os.path.join(current_user.upload_dir, filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    else:
+        flash("Böyle bir dosya yok")
+    return redirect(url_for('files.index'))
+```
+
+`microblog/microblog/views/files/index.html` dosyasında silme linkini aşağıdaki gibi düzenleyelim:
+
+`<a href="{{url_for('files.delete', filename=file_path.relative_to(current_user.upload_dir))}}"><span class="glyphicon glyphicon-download-alt"></span></a>`
+
+Aslında silmeden önce javascript ile silinmesinden emin olup olmadığını sormak gerekir. Bunu yapabilirmisiniz?
 
