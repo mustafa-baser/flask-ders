@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block app_content %}
+
+    <div class="page-header">
+      <h1>Son İletiler</h1>
+      <p><a href="{{url_for('message.new')}}">Yeni ileti oluştur</a></p>
+    </div>
+
+    {% for post in posts %}
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ post.title }} <a href="{{url_for('message.comment', pid=post.id)}}" class="btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-repeat"></span> Yorumla</a></div>
+      <div class="panel-body">
+        {{ post.body }}
+        {% if post.comments.count() %}
+        <br><br>
+        <p>
+          <b>Yorumlar</b>
+          {% for comment in post.comments %}
+            <li>{{comment.body}} ({{comment.author.username}} {{comment.timestamp.ctime()}})</li>
+          {% endfor %}
+        </p>
+        {% endif %}
+      </div>
+      <div class="panel-footer">
+        {{ post.author.username }}
+        
+        <span class="pull-right">{{ post.timestamp.day }}/{{ post.timestamp.month }}/{{ post.timestamp.year }} {{ post.timestamp.hour }}:{{ post.timestamp.minute }}</span>
+      </div>
+    </div>
+    {% endfor %}
+
+
+    <center>
+    {% if posts.prev_num %}<a href="{{url_for('message.index', page=posts.prev_num)}}">Önceki</a>{% endif %}
+    
+    <ul class="pagination">
+    {% for p in posts.iter_pages() %}
+      {% if p %}
+        {% if p == posts.page %}
+          <li class="active"><a>{{p}}</a><li>
+        {% else %}
+          <li><a href="{{url_for('message.index', page=p)}}">{{p}}</a></li>
+        {% endif %}
+       {% else %}
+         <li><a>...</a><li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+
+    {% if posts.next_num %}<a href="{{url_for('message.index', page=posts.next_num)}}">Sonraki</a>{% endif %}
+    </center>
+{% endblock %}
+

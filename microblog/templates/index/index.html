@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import deneme %}
+{% block app_content %}
+
+
+    <div class="page-header">
+      <h1>Merhaba, {{ current_user.username | uppercase }} - {{ current_user.email }}!</h1>
+      <p>Son iletilerim, <a href="{{url_for('message.new', next=url_for('index.index'))}}">Yeni ileti Oluştur</a></p>
+    </div>
+
+    {% for post in posts %}
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">{{ post.title }}</div>
+      <div class="panel-body">{{ post.body }}</div>
+      <div class="panel-footer text-right">{{ post.timestamp.day }}/{{ post.timestamp.month }}/{{ post.timestamp.year }} {{ post.timestamp.hour }}:{{ post.timestamp.minute }}</div>
+    </div>
+    {% endfor %}
+
+{{deneme(posts)}}
+
+{% endblock %}
+
