@@ -66,3 +66,6 @@ class FileUploadForm(FlaskForm):
     file_upload = FileField("Dosya")
     submit = SubmitField('Yükle')
 
+
+class QuizForm(FlaskForm):
+    submit = SubmitField('Gönder')

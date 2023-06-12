@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="page-header">
+      <h1>Test Sonucu</h1>
+    </div>
+
+<p><b>Cevaplanan Soru Sayısı</b>: {{answer_number}}</p>
+<p><b>Doğru Cavap Sayısı</b>: {{correct_answer_number}}</p>
+<p><b>Aldığınız Puan</b>: {{score}}</p>
+
+{% endblock %}
+

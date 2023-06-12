@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+
+  <form method="post" method="POST">
+    {{ form.csrf_token() }}
+
+      {% for item in questions %}
+      {% set question_loop = loop %}
+      <div>
+      <b>Soru-{{loop.index}}</b> {{item.question}}
+        {% for i in ('a', 'b', 'c', 'd') %}
+          <div class="radio"><label><input type="radio" name="answer-{{question_loop.index0}}" value="{{i}}"> {{item['alternative_'+i]}}</label></div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+            
+    <div>{{ wtf.form_field(form.submit) }}</div>
+</form>
+
+{% endblock %}
+
