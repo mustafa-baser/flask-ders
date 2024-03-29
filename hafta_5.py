@@ -9,12 +9,24 @@ def index():
 
 @app.route('/saat')
 def saat():
-    return f"<b>Bugünkü tarih: </b> {time.ctime()}"
+
+    data = {'tarih': time.ctime(), 'gun': 'Cuma'}
+    template = "<b>Bugünkü tarih: </b> {tarih}, günlerden {gun}"
+    
+    return template.format(**data)
+
 
 @app.route('/yemek-menusu')
 def yemek_menusu():
     html_metin = open('yemek_menusu.html').read()
-    return html_metin
+    data = {
+        'tarih': time.ctime(),
+        'kahvalti_1': 'Peynir',
+        'kahvalti_2': 'Zeytin',
+        'kahvalti_3': 'Mıhlama',
+        'kahvalti_4': 'Çay',
+        }
+    return html_metin.format(**data)
     
 
 
