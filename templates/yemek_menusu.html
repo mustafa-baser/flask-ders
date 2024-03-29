@@ -9,10 +9,9 @@
 <tr>
     <td>
         <ul>
-            <li> {{data['kahvalti_1']}}
-            <li> {{data['kahvalti_2']}}
-            <li> {{data['kahvalti_3']}}
-            <li> {{data['kahvalti_4']}}
+            {% for x in data['kahvalti'] %}
+            <li>{{x}}</li>
+            {% endfor %}
         </ul>
     </td>
     
