@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import time
 
 app = Flask(__name__)
@@ -10,10 +10,10 @@ def index():
 @app.route('/saat')
 def saat():
 
-    data = {'tarih': time.ctime(), 'gun': 'Cuma'}
-    template = "<b>Bugünkü tarih: </b> {tarih}, günlerden {gun}"
-    
-    return template.format(**data)
+    tarih = time.ctime()
+    gun = 'Cuma'
+        
+    return render_template('tarih_saat.html', tarih=tarih, gun=gun)
 
 
 @app.route('/yemek-menusu')
