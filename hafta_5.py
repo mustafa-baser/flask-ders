@@ -26,8 +26,8 @@ def yemek_menusu():
         'kahvalti_3': 'Mıhlama',
         'kahvalti_4': 'Çay',
         }
-    return html_metin.format(**data)
-    
+        
+    return render_template('yemek_menusu.html', data=data)
 
 
 app.run(debug=True)
