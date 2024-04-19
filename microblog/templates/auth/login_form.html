@@ -2,10 +2,10 @@
 
 {% block content %}
 
-<form>
-<div><b>Kullanıcı Adı:</b> <input type="text" name="username"></div>
-<div><b>Parola:</b> <input type="password" name="password"></div>
-<div><input type="submit" name="giris" value="Gir"></div>
+<form method="POST">
+<div><b>{{form.username.label}}</b>{{form.username}}</div>
+<div><b>{{form.password.label}}</b>{{form.password}}</div>
+<div>{{form.submit}}</div>
 </form>
 
 {% endblock %}
