@@ -1,20 +1,12 @@
-<!doctype html>
-<html>
-    <head>
-        <title>
-        {% if title %}
-            {{ title }} - Microblog
-        {% else %}
-            Microblog Uygulamasına Hoşgeldiniz
-        {% endif %}
-        </title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+
+{% block content %}
+
         <h1>Merhaba, {{ user.username }}!</h1>
         
     <hr>
     {% for post in posts %}
        <br> <b>{{ post.author }}</b> dedi ki: <i>{{ post.body }}</i>
     {% endfor %}
-    </body>
-</html>
+
+{% endblock %}

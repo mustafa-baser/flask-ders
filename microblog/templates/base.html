@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+        {% if title %}
+            {{ title }} - Microblog
+        {% else %}
+            Microblog Uygulamasına Hoşgeldiniz
+        {% endif %}
+        </title>
+    </head>
+    <body>
+Microblog: <a href="/">Ana Sayfa</a> <a href="/auth/login">Giriş</a>
+<hr>
+    {% block content %}{% endblock %}
+
+<hr>
+Footer
+    </body>
+</html>
