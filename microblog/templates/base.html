@@ -10,7 +10,8 @@
         </title>
     </head>
     <body>
-Microblog: <a href="/">Ana Sayfa</a> <a href="/auth/login">Giriş</a>
+Microblog: <a href="{{url_for('index.index')}}">Ana Sayfa</a> 
+           <a href="{{url_for('auth.login')}}">Giriş</a>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
