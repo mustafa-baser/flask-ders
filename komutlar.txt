@@ -3,3 +3,4 @@
 DB Başlatma: python -m flask --debug --app microblog_app db init
 DB Değişiklikleri: python -m flask --debug --app microblog_app db migrate
 DB Güncelleme: python -m flask --debug --app microblog_app db upgrade
+Flask Kabuğuna erişim: python -m flask --debug --app microblog_app shell

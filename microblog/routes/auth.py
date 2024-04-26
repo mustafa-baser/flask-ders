@@ -9,7 +9,8 @@ from microblog.forms import LoginForm
 def login():
     form = LoginForm()
     if request.method == 'POST':
-        if form.username.data == 'serap' and form.password.data == '1234':
+        user_obj = User.query.filter_by(username=form.username.data).first()
+        if user_obj and user_obj.check_password(form.password.data):
             flash("Giriş Başarılı")
             return redirect(url_for('index.index'))
         else:
