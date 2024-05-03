@@ -1,16 +1,17 @@
 from flask import Blueprint, render_template
-
+from microblog.models import Post, User
+from flask_login import current_user
 index_bp = Blueprint('index', __name__)
 
 
 @index_bp.route('/')
 def index():
-    user = {'username': 'cagla'}
-    
-    posts = [
-        {'author': 'serap', 'body': "Kastamonu kanyonuna geldiniz mi?"},
-        {'author': 'sumeyra', 'body': "Asıl Vezirköprü kanyonunu gödrünüz mü?"},
-        {'author': 'gulsat', 'body': "Herkes acıktı hcoam gidelim"},
-    ]
-    
-    return render_template('index.html', user=user, posts=posts)
+
+    if current_user.is_authenticated:
+        user_last_post = current_user.posts.order_by(Post.date.desc()).first()
+        posts = Post.query.order_by(Post.date.desc()).filter(Post.user_id != current_user.id).limit(3).all()
+    else:
+        user_last_post = None
+        posts=[]
+
+    return render_template('index.html', user_last_post=user_last_post, posts=posts)

@@ -10,8 +10,13 @@
         </title>
     </head>
     <body>
-Microblog: <a href="{{url_for('index.index')}}">Ana Sayfa</a> 
-           <a href="{{url_for('auth.login')}}">Giriş</a>
+
+Microblog: <a href="{{url_for('index.index')}}">Ana Sayfa</a>
+            {% if current_user.is_anonymous %}
+               <a href="{{url_for('auth.login')}}">Giriş</a>
+            {% else %}
+                <a href="{{url_for('auth.logout')}}">Çıkış</a>
+            {% endif %}
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
