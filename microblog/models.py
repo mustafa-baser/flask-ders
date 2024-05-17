@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256))
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
-
+    profile = db.relationship('Profile', backref='user', uselist=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -24,6 +24,12 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return f'<User {self.username}:{self.email}>'
 
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    lastname = db.Column(db.String(100)) 
+    about = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

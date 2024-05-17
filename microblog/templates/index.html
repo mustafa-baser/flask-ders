@@ -23,7 +23,7 @@
             <div> <b>{{ post.author.username }}</b> dedi ki: <i>{{ post.body }}</i> ({{ post.date }})</div>
         {% endfor %}
     {% else %}
-        İletileri görmek için giriş yapmalısınız.
+        İletileri görmek için giriş yapmalısınız. Üye değilseniz <a href="{{url_for('auth.register')}}">buradan</a> üye olabilirsiniz.
     {% endif %}
 
 {% endblock %}

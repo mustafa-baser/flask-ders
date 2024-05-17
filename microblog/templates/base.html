@@ -16,6 +16,7 @@ Microblog: <a href="{{url_for('index.index')}}">Ana Sayfa</a>
                <a href="{{url_for('auth.login')}}">Giriş</a>
             {% else %}
                 <a href="{{url_for('auth.logout')}}">Çıkış</a>
+                <a href="{{url_for('auth.profile')}}">Profilim</a>
             {% endif %}
 
 {% with messages = get_flashed_messages() %}

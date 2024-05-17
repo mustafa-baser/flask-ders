@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, flash, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
 auth_bp = Blueprint('auth', __name__)
 
 from microblog.models import User
-from microblog.forms import LoginForm
+from microblog.forms import LoginForm, RegisterForm, ProfileForm
 from microblog.extensions import db, login
 
 @login.user_loader
@@ -30,3 +30,30 @@ def logout():
     logout_user()
     flash("Başarılı bir şekilde çıkış yaptınız.")
     return redirect(url_for('index.index'))
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            username = form.username.data
+            password = form.password.data
+            password1 = form.password1.data
+            email = form.email.data
+            user = User(username=username, email=email)
+            db.session.add(user)
+            db.session.commit()
+            user.set_password(password)
+            flash("Kayıtlanma başarılı")
+            return redirect(url_for('index.index'))
+
+    return render_template('auth/register_form.html', form=form)
+
+@auth_bp.route('/profile', methods=['GET', 'POST'])
+def profile():
+    form =  ProfileForm()
+    if current_user.profile:
+        form.name.data = current_user.profile.name
+        form.lastname.data = current_user.profile.lastname
+        form.about.data = current_user.profile.about
+    return render_template('auth/profile_form.html', form=form)
