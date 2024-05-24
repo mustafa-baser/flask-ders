@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
 {% block content %}
 
 <form method="POST">
 {{form.hidden_tag()}}
-<div><b>{{form.name.label}} </b>{{form.name}}</div>
-<div><b>{{form.lastname.label}} </b>{{form.lastname}}</div>
-<div><b>{{form.about.label}} </b>{{form.about}}
-<div>{{form.submit}}</div>
+
+{{render_field(form.name)}}
+{{render_field(form.lastname)}}
+{{render_field(form.about)}}
+{{render_field(form.submit)}}
+
 </form>
 
 {% endblock %}

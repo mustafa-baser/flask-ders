@@ -30,6 +30,7 @@ class Profile(db.Model):
     lastname = db.Column(db.String(100)) 
     about = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    avatar = db.Column(db.Text)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

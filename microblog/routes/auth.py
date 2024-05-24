@@ -18,17 +18,17 @@ def login():
     if request.method == 'POST':
         user_obj = User.query.filter_by(username=form.username.data).first()
         if user_obj and user_obj.check_password(form.password.data):
-            flash("Giriş Başarılı")
+            flash("Giriş Başarılı", category='success')
             login_user(user_obj)
             return redirect(url_for('index.index'))
         else:
-            flash("Kullanıcı adı yada parolası yanlış")
+            flash("Kullanıcı adı yada parolası yanlış", category='danger')
     return render_template('auth/login_form.html', form=form)
 
 @auth_bp.route('/logout')
 def logout():
     logout_user()
-    flash("Başarılı bir şekilde çıkış yaptınız.")
+    flash("Başarılı bir şekilde çıkış yaptınız.", category='success')
     return redirect(url_for('index.index'))
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -44,7 +44,7 @@ def register():
             db.session.add(user)
             db.session.commit()
             user.set_password(password)
-            flash("Kayıtlanma başarılı")
+            flash("Kayıtlanma başarılı", category='success')
             return redirect(url_for('index.index'))
 
     return render_template('auth/register_form.html', form=form)

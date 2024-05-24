@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, ValidationError, Email
 from microblog.models import User
 
 class LoginForm(FlaskForm):
@@ -12,7 +12,7 @@ class RegisterForm(FlaskForm):
     username = StringField("Kullanıcı Adı", validators=[DataRequired()])
     password = PasswordField("Parola", validators=[DataRequired()])
     password1 = PasswordField("Tekrar Parola", validators=[DataRequired()])
-    email = StringField("E-posta", validators=[DataRequired()])
+    email = StringField("E-posta", validators=[DataRequired(), Email(message="Geçersiz e-posta adresi")])
     submit = SubmitField("Üye Ol")
     
     def validate_username(self, field):
