@@ -13,9 +13,9 @@
         {% endif %}
         </title>
     </head>
-    <body>
+    <body class="d-flex flex-column vh-100">
 
-
+<header>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <div class="container-fluid">
     <ul class="navbar-nav">
@@ -55,6 +55,7 @@
   </div>
 </nav>
 
+</header>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
@@ -65,13 +66,15 @@
     </div>
   {% endif %}
 {% endwith %}
-
+<main class="flex-shrink-0">
 <div class="container">
     {% block content %}{% endblock %}
+</main>
 
-
-<footer class="align-items-center border-bottom">
-    <p class="text-center text-muted">OMÜ BÖTE FLASK</p>
+<footer class="footer mt-auto">
+    <div class="container ">
+    <p class="text-center text-muted">OMÜ BÖTE Web Araçları ile Veri Yönetimi</p>
+    </div>
 </footer>
 </div>
 
