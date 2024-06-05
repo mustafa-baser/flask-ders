@@ -12,15 +12,35 @@
         
     <hr>
     {% if current_user.is_authenticated %}
+        <a href="{{url_for('post.new')}}" class="btn btn-info">Yeni İleti</a>
         <h2>Son iletim</h2>
-        {% if user_last_post %}
-         <div> <i>{{ user_last_post.body }}</i> ({{ user_last_post.date }})</div>
+        {% if user_last_post %}         
+            <div class="card">
+              <div class="card-header">
+                {{ user_last_post.date }} - {% if user_last_post.author.profile %}{{ user_last_post.author.profile.name }} {{ user_last_post.author.profile.lastname }} {% else %} {{ user_last_post.author.username}} {% endif %}
+              </div>
+              <div class="card-body">
+                {{ user_last_post.body }}
+              </div>
+            </div>
+                  
          {% else %}
          <font color="red">Henüz bir iletiniz yok</font>
          {% endif %}
+         <br>
          <h2>Diğer Kullanıcılardan</h2>
         {% for post in posts %}
-            <div> <b>{{ post.author.username }}</b> dedi ki: <i>{{ post.body }}</i> ({{ post.date }})</div>
+                        
+            <div class="card">
+              <div class="card-header">
+                {{ post.date }} - {% if post.author.profile %}{{ post.author.profile.name }} {{ post.author.profile.lastname }} {% else %} {{ post.author.username}} {% endif %} <a href="{{url_for('post.response', id=post.id)}}" class="badge bg-success text-decoration-none float-end">Cevapla</a>
+              </div>
+              <div class="card-body">
+                {{ post.body }}
+              </div>
+            </div>
+            <br>
+
         {% endfor %}
     {% else %}
         İletileri görmek için giriş yapmalısınız. Üye değilseniz <a href="{{url_for('auth.register')}}">buradan</a> üye olabilirsiniz.

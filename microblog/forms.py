@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FileField
 from wtforms.validators import DataRequired, ValidationError, Email
 from microblog.models import User
 
@@ -36,7 +36,12 @@ class RegisterForm(FlaskForm):
             
 
 class ProfileForm(FlaskForm):
+    avatar = FileField("Avatar")
     name = StringField("Adı")
     lastname = StringField("Soyadı")
     about = TextAreaField("Hakkımda")
     submit = SubmitField("Güncelle")
+
+class PostForm(FlaskForm):
+    post = TextAreaField("İleti")
+    submit = SubmitField("Gönder")

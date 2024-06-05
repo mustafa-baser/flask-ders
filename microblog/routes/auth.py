@@ -1,9 +1,11 @@
+import base64
+
 from flask import Blueprint, render_template, request, redirect, flash, url_for
 from flask_login import login_user, logout_user, current_user
 
 auth_bp = Blueprint('auth', __name__)
 
-from microblog.models import User
+from microblog.models import User, Profile
 from microblog.forms import LoginForm, RegisterForm, ProfileForm
 from microblog.extensions import db, login
 
@@ -52,8 +54,33 @@ def register():
 @auth_bp.route('/profile', methods=['GET', 'POST'])
 def profile():
     form =  ProfileForm()
-    if current_user.profile:
-        form.name.data = current_user.profile.name
-        form.lastname.data = current_user.profile.lastname
-        form.about.data = current_user.profile.about
+    if request.method == 'POST':
+        if not current_user.profile:
+            current_user.profile = Profile()
+
+        current_user.profile.name = form.name.data
+        current_user.profile.lastname = form.lastname.data
+        current_user.profile.about = form.about.data
+        
+        if 'avatar' in request.files:
+            avatar_bin = request.files['avatar'].stream.read()
+            avatar_str = base64.encodebytes(avatar_bin).decode()
+            current_user.profile.avatar = avatar_str
+        
+        db.session.commit()
+
+    else:
+        if current_user.profile:
+            form.name.data = current_user.profile.name
+            form.lastname.data = current_user.profile.lastname
+            form.about.data = current_user.profile.about
+
     return render_template('auth/profile_form.html', form=form)
+
+
+@auth_bp.route('/profile-delete')
+def profile_delete():
+    if current_user.profile:
+        current_user.profile.avatar = None
+        db.session.commit()
+    return redirect(url_for('auth.profile'))
