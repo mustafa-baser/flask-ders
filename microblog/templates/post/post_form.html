@@ -1,10 +1,14 @@
+{% from 'macros.html' import display_post %}
 {% extends 'base.html' %}
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
 <div class="mt-4 p-5 rounded">
 <h1>İletinizi Yazın</h1>
-<i>{{msg}}</i>
+{% if post %} 
+<div>Cevap Yazılan İleti:</div>
+{{display_post(post)}} 
+{% endif %}
 <form method="POST">
 {{ render_form(form) }}
 </form>

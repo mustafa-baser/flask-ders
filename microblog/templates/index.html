@@ -1,3 +1,4 @@
+{% from 'macros.html' import display_post %}
 {% extends 'base.html' %}
 
 {% block content %}
@@ -15,14 +16,7 @@
         <a href="{{url_for('post.new')}}" class="btn btn-info">Yeni İleti</a>
         <h2>Son iletim</h2>
         {% if user_last_post %}         
-            <div class="card">
-              <div class="card-header">
-                {{ user_last_post.date }} - {% if user_last_post.author.profile %}{{ user_last_post.author.profile.name }} {{ user_last_post.author.profile.lastname }} {% else %} {{ user_last_post.author.username}} {% endif %}
-              </div>
-              <div class="card-body">
-                {{ user_last_post.body }}
-              </div>
-            </div>
+            {{ display_post(user_last_post) }}
                   
          {% else %}
          <font color="red">Henüz bir iletiniz yok</font>
@@ -31,15 +25,7 @@
          <h2>Diğer Kullanıcılardan</h2>
         {% for post in posts %}
                         
-            <div class="card">
-              <div class="card-header">
-                {{ post.date }} - {% if post.author.profile %}{{ post.author.profile.name }} {{ post.author.profile.lastname }} {% else %} {{ post.author.username}} {% endif %} <a href="{{url_for('post.response', id=post.id)}}" class="badge bg-success text-decoration-none float-end">Cevapla</a>
-              </div>
-              <div class="card-body">
-                {{ post.body }}
-              </div>
-            </div>
-            <br>
+            {{ display_post(post, button=True) }}
 
         {% endfor %}
     {% else %}

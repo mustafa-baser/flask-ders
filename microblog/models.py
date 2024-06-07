@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(256))
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    comments = db.relationship('PostComment', backref='author', lazy='dynamic')
     profile = db.relationship('Profile', backref='user', uselist=False)
 
     def set_password(self, password):
@@ -38,6 +39,17 @@ class Post(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    comments = db.relationship('PostComment', backref='post', lazy='dynamic')
 
     def __repr__(self):
         return f'<Post {self.body[:20]}...>'
+
+class PostComment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+
+    def __repr__(self):
+        return f'<Post Comment {self.body[:20]}...>'

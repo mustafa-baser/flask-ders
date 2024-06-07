@@ -1,13 +1,16 @@
 import base64
 
 from flask import Blueprint, render_template, request, redirect, flash, url_for
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 auth_bp = Blueprint('auth', __name__)
 
 from microblog.models import User, Profile
 from microblog.forms import LoginForm, RegisterForm, ProfileForm
 from microblog.extensions import db, login
+
+login.login_view = 'auth.login'
+login.login_message = "Bu sayfaya erişim için giriş yapmalısınız."
 
 @login.user_loader
 def load_user(id):
@@ -22,12 +25,14 @@ def login():
         if user_obj and user_obj.check_password(form.password.data):
             flash("Giriş Başarılı", category='success')
             login_user(user_obj)
-            return redirect(url_for('index.index'))
+            next_ = request.args.get('next') or url_for('index.index')
+            return redirect(next_)
         else:
             flash("Kullanıcı adı yada parolası yanlış", category='danger')
     return render_template('auth/login_form.html', form=form)
 
 @auth_bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash("Başarılı bir şekilde çıkış yaptınız.", category='success')
@@ -52,6 +57,7 @@ def register():
     return render_template('auth/register_form.html', form=form)
 
 @auth_bp.route('/profile', methods=['GET', 'POST'])
+@login_required
 def profile():
     form =  ProfileForm()
     if request.method == 'POST':
@@ -79,6 +85,7 @@ def profile():
 
 
 @auth_bp.route('/profile-delete')
+@login_required
 def profile_delete():
     if current_user.profile:
         current_user.profile.avatar = None
