@@ -3,7 +3,7 @@
 {% block icerik %}
     <h2>Giriş</h2>
     <form name="login" method="POST">
-        
+        {{ form.csrf_token }}
         <p>
         {{form.username.label}}:
         <br>{{form.username}}        

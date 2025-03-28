@@ -1,6 +1,6 @@
-Çalıştırma: python -m flask --debug --app microblog_app run
+Çalıştırma: python -m flask --debug --app microblog run
 
-DB Başlatma: python -m flask --debug --app microblog_app db init
-DB Değişiklikleri: python -m flask --debug --app microblog_app db migrate
-DB Güncelleme: python -m flask --debug --app microblog_app db upgrade
-Flask Kabuğuna erişim: python -m flask --debug --app microblog_app shell
+DB Başlatma: python -m flask --debug --app microblog db init
+DB Değişiklikleri: python -m flask --debug --app microblog db migrate
+DB Güncelleme: python -m flask --debug --app microblog db upgrade
+Flask Kabuğuna erişim: python -m flask --debug --app microblog shell

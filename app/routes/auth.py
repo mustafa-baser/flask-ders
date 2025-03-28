@@ -7,7 +7,6 @@ from app.forms import LoginForm
 from app.models import User
 from app.extensions import login
 
-from werkzeug.security import check_password_hash
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -24,7 +23,7 @@ def login():
     if request.method == 'POST':
         user = User.query.filter_by(username=form.username.data).first()
 
-        if user and check_password_hash(user.password_hash, form.password.data):
+        if user and user.check_password(form.password.data):
             login_user(user)
             flash("Giriş başarılı")
             return redirect(url_for('index.index'))
