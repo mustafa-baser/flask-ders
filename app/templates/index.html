@@ -22,7 +22,7 @@
             <p class="card-text">{{post.body}}</p>
             <ul>
                     {% for comment in post.comments %}
-          <li> {{ comment.author.username }} yorumladı: <b>{{ comment.body }}</b> [ <i>{{tarih(comment.timestamp)}}</i>] </li>
+          <li>{{ comment.body }} [{{ comment.author.name }}  {{comment.author.lastname }}-  <i>{{tarih(comment.timestamp)}}</i>] </li>
         {% endfor %}
             </ul>
             
