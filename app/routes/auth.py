@@ -25,15 +25,15 @@ def login():
 
         if user and user.check_password(form.password.data):
             login_user(user)
-            flash("Giriş başarılı")
+            flash("Giriş başarılı", 'success')
             return redirect(url_for('index.index'))
         else:
-            flash("Kullanıcı adı veya parolası yanlış")
+            flash("Kullanıcı adı veya parolası yanlış", 'danger')
 
     return render_template('login.html', form=form)
 
 @auth_bp.route('/logout')
 def logout():
     logout_user()
-    flash("Çıkış başarılı")
+    flash("Çıkış başarılı", 'success')
     return redirect(url_for('index.index'))

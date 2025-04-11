@@ -1,22 +1,9 @@
+{% from 'bootstrap5/form.html' import render_form %}
+
 {% extends "base.html" %}
 
 {% block icerik %}
     <h2>Giriş</h2>
-    <form name="login" method="POST">
-        {{ form.csrf_token }}
-        <p>
-        {{form.username.label}}:
-        <br>{{form.username}}        
-        </p>
-        
-        <p>
-        {{form.password.label}}:
-        <br>{{form.password}}
-        </p>
-        
-        <p>
-        {{form.submit}}
-        </p>
-    </form>
+    {{render_form(form)}}
 
 {% endblock %}
