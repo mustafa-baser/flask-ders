@@ -8,7 +8,15 @@
         {{ current_user.name }} {{ current_user.lastname }} [{{ current_user.email }}]!
     {% endif %}
     </h1>
+    
     {% for post in posts %}
-    <div><p>{{ post.author.username }} <i>{{post.timestamp}} tarihinide </i>dedi ki: <b>{{ post.body }}</b></p></div>
+    <div>
+        <p>{{ post.author.username }} <i>{{post.timestamp}} tarihinide </i>dedi ki: <b>{{ post.body }}</b></p>
+        <ul>
+        {% for comment in post.comments %}
+          <li> {{ comment.author.username }} yorumladı: <b>{{ comment.body }}</b> [ <i>{{comment.timestamp}}</i>] </li>
+        {% endfor %}
+        </ul>
+    </div>
     {% endfor %}
 {% endblock %}
