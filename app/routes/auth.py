@@ -3,8 +3,8 @@ from flask import Blueprint
 from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user
 
-from app.forms import LoginForm
-from app.models import User
+from app.forms import LoginForm, RegisterForm
+from app.models import db, User
 from app.extensions import login
 
 
@@ -37,3 +37,22 @@ def logout():
     logout_user()
     flash("Çıkış başarılı", 'success')
     return redirect(url_for('index.index'))
+
+
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if request.method == 'POST' and form.validate(): 
+        user = User(
+            username=form.username.data,
+            email=form.email.data,
+            name=form.name.data,
+            lastname=form.lastname.data
+            )
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash("Kayıtlanma tamamlandı", 'success')
+        return redirect(url_for('auth.login'))
+            
+    return render_template('register.html', form=form)

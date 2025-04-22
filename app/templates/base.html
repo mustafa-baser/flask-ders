@@ -43,6 +43,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
               <div class="navbar-nav">
 
                 {% if current_user.is_authenticated %}
@@ -50,19 +51,14 @@
                 {% else %}
                     <a class="nav-link {% if request.url_rule.endpoint=='auth.login'%}active{% endif %}" href="{{url_for('auth.login')}}">Giriş</a>
                 {% endif %}
-             </div>
-
-
+                
+              </div>
 
               </div>
             </div>
           </div>
         </nav>
-        
-        
-        
-    
-        
+
         
         <div class="container">
         {% block icerik %}{% endblock %}
