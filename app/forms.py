@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField
+from wtforms import DateField
+ 
 from wtforms.validators import InputRequired, ValidationError, EqualTo, Email, Length
 
 from app.models import User
@@ -34,3 +36,9 @@ class RegisterForm(FlaskForm):
         email_exists = User.query.filter_by(email=field.data).first()
         if email_exists:
             raise ValidationError("Bu e-posta adresi ile daha önceden kayıtlanma yapılmış.")
+
+class ProfilForm(FlaskForm):
+    about_me = TextAreaField("Hakkımda")
+    avatar = FileField("Avatar")
+    birthdate = DateField("Doğum Tarihi")
+    submit = SubmitField("Kaydet")

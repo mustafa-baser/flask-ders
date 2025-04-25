@@ -1,0 +1,32 @@
+{% from 'bootstrap5/form.html' import render_field %}
+
+{% extends "base.html" %}
+
+{% block icerik %}
+    <h2>Profil</h2>
+ 
+<form action="" method="post" class="form" enctype="multipart/form-data" role="form">
+  {{ form.csrf_token }} 
+    
+ 
+  {{ render_field(form.about_me) }}
+  
+  {% if avatar %}
+  <img src="data:image/png;base64, {{avatar}}" alt="Avatar" style="width:200px;">  
+    <button type="button" class="btn btn-danger">
+    <a href="{{url_for('auth.delete_avatar')}}">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+    </svg>
+  Sil
+  </a>
+  </button>
+  {% endif %}
+  {{ render_field(form.avatar) }}
+  
+  {{ render_field(form.birthdate) }}
+  
+  {{ render_field(form.submit) }}
+    
+</form>
+{% endblock %}

@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    profile = db.relationship('Profile', backref='user', lazy='dynamic')
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -42,4 +43,10 @@ class Comment(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
-    
+
+class Profile(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    about_me = db.Column(db.Text)
+    avatar = db.Column(db.Text)
+    birthdate = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

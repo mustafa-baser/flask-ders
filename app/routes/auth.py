@@ -1,9 +1,12 @@
+import base64
+from datetime import datetime
+
 from flask import Blueprint
 
 from flask import Flask, render_template, request, flash, redirect, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, ProfilForm
 from app.models import db, User
 from app.extensions import login
 
@@ -56,3 +59,36 @@ def register():
         return redirect(url_for('auth.login'))
             
     return render_template('register.html', form=form)
+
+@auth_bp.route('/profil', methods=['GET', 'POST'])
+def profil():
+    form = ProfilForm()
+    profil_obj = current_user.profile.first()
+    avatar = profil_obj.avatar
+    if request.method == 'POST':
+        about_me = form.about_me.data
+        birthdate = form.birthdate.data
+
+        if request.files:
+            uploaded_file = request.files['avatar']
+            avatar_bin = uploaded_file.stream.read()
+            avatar_b64b = base64.b64encode(avatar_bin)
+            profil_obj.avatar = avatar_b64b.decode()
+        
+        profil_obj.about_me = about_me
+        profil_obj.birthdate = birthdate
+        db.session.commit()
+        return redirect(url_for('auth.profil'))
+    else:
+        form.about_me.data = profil_obj.about_me
+        form.birthdate.data = profil_obj.birthdate
+        
+
+    return render_template('profil.html', form=form, avatar=avatar)
+
+@auth_bp.route('/delete-avatar')
+def delete_avatar():
+    profil_obj = current_user.profile.first()
+    profil_obj.avatar = ''
+    db.session.commit()
+    return redirect(url_for('auth.profil'))
