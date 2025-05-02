@@ -2,17 +2,9 @@
 {% extends "base.html" %}
 
 {% block icerik %}
-    <h1>Merhaba, 
-    {% if current_user.is_anonymous %}
-        Misafir Kullanıcı
-    {% else %}
-        {{ current_user.name }} {{ current_user.lastname }} [{{ current_user.email }}]!
-    {% endif %}
-    </h1>
+    <h1>İletilerim</h1>
     
     {% for post in posts %}
-    
-    
         <div class="card">
           <div class="card-header  d-flex">
             {{post.author.name}} {{post.author.lastname}}  <span class="ms-auto text-muted">{{tarih(post.timestamp)}}</span>
@@ -25,13 +17,18 @@
           <li>{{ comment.body }} [{{ comment.author.name }}  {{comment.author.lastname }}-  <i>{{tarih(comment.timestamp)}}</i>] </li>
         {% endfor %}
             </ul>
-            <i class="fa fa-mail-reply"></i>
+            
           </div>
         </div>
         
     <br>
+    {% else %}
+    
+      Henüz bir ileti göndermemişsin.
     
     {% endfor %}
 
+
+<p>Yeni ileti için <a href="{{url_for('post.new_post')}}">tıklayın</a>
 
 {% endblock %}

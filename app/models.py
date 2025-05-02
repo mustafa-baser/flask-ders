@@ -1,7 +1,8 @@
 from datetime import datetime
 from flask_login import UserMixin
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask import current_app
 
+from werkzeug.security import check_password_hash, generate_password_hash
 from app.extensions import db
 
 class User(db.Model, UserMixin):
@@ -27,6 +28,14 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f'<user {self.username} - {self.email}>'
+
+    @property
+    def avatar(self):
+        result = self.profile.with_entities(Profile.avatar).first()
+        if result and result[0]:
+            return result[0]
+
+        return current_app.config['DEFAULT_AVATAR']
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -7,6 +7,8 @@ from flask_bootstrap import Bootstrap5
 db = SQLAlchemy()
 migrate = Migrate(db=db)
 login = LoginManager()
+login.login_view = 'auth.login'
+
 csrf = CSRFProtect()
 bootstrap = Bootstrap5()
 

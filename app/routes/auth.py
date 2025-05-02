@@ -4,10 +4,10 @@ from datetime import datetime
 from flask import Blueprint
 
 from flask import Flask, render_template, request, flash, redirect, url_for
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from app.forms import LoginForm, RegisterForm, ProfilForm
-from app.models import db, User
+from app.models import db, User, Profile
 from app.extensions import login
 
 
@@ -29,13 +29,18 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user)
             flash("Giriş başarılı", 'success')
-            return redirect(url_for('index.index'))
+            next_ = request.args.get('next')
+            if next_:
+                return redirect(next_)
+            else:
+                return redirect(url_for('index.index')) 
         else:
             flash("Kullanıcı adı veya parolası yanlış", 'danger')
 
     return render_template('login.html', form=form)
 
 @auth_bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash("Çıkış başarılı", 'success')
@@ -61,14 +66,21 @@ def register():
     return render_template('register.html', form=form)
 
 @auth_bp.route('/profil', methods=['GET', 'POST'])
+@login_required
 def profil():
     form = ProfilForm()
     profil_obj = current_user.profile.first()
-    avatar = profil_obj.avatar
+    avatar = ''
+    if profil_obj:
+        avatar = current_user.avatar
+    
     if request.method == 'POST':
         about_me = form.about_me.data
         birthdate = form.birthdate.data
 
+        if not profil_obj:
+            profil_obj = Profile(user_id=current_user.id)
+            db.session.add(profil_obj)
         if request.files:
             uploaded_file = request.files['avatar']
             avatar_bin = uploaded_file.stream.read()
@@ -80,13 +92,15 @@ def profil():
         db.session.commit()
         return redirect(url_for('auth.profil'))
     else:
-        form.about_me.data = profil_obj.about_me
-        form.birthdate.data = profil_obj.birthdate
-        
+        if profil_obj:
+            form.about_me.data = profil_obj.about_me
+            form.birthdate.data = profil_obj.birthdate
+            
 
     return render_template('profil.html', form=form, avatar=avatar)
 
 @auth_bp.route('/delete-avatar')
+@login_required
 def delete_avatar():
     profil_obj = current_user.profile.first()
     profil_obj.avatar = ''

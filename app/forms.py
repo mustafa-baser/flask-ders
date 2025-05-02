@@ -42,3 +42,8 @@ class ProfilForm(FlaskForm):
     avatar = FileField("Avatar")
     birthdate = DateField("Doğum Tarihi")
     submit = SubmitField("Kaydet")
+
+class PostForm(FlaskForm):
+    title = StringField("Başlık")
+    body = TextAreaField("İleti", validators=[InputRequired()])
+    submit = SubmitField("Gönder")
