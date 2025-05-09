@@ -48,8 +48,12 @@
                   {% if current_user.is_authenticated %}
                 <a class="nav-link {% if request.endpoint == 'post.posts' %}active{% endif %}" aria-current="page" href="{{url_for('post.posts')}}">İletilerim</a>
                   {% endif %}
+                {% if current_user.is_authenticated and current_user.has_role('admin') %}
+                <a class="nav-link {% if request.endpoint == 'index.admin_pages' %}active{% endif %}" aria-current="page" href="{{url_for('index.admin_pages')}}">Yönetici Sayfaları</a>
+                {% endif %}
               </div>
 
+            
 
         <ul class="navbar-nav ms-auto">
 

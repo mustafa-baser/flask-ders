@@ -47,3 +47,7 @@ class PostForm(FlaskForm):
     title = StringField("Başlık")
     body = TextAreaField("İleti", validators=[InputRequired()])
     submit = SubmitField("Gönder")
+
+class CommentForm(FlaskForm):
+    body = TextAreaField("Yorum", validators=[InputRequired()])
+    submit = SubmitField("Gönder")

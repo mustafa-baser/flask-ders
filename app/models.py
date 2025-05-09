@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
     profile = db.relationship('Profile', backref='user', lazy='dynamic')
+    roles = db.relationship('UserRole', backref='user', lazy='dynamic')
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -29,6 +30,12 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f'<user {self.username} - {self.email}>'
 
+
+    def has_role(self, role):
+        for urole in self.roles:
+            if urole.role.name == role:
+                return True
+
     @property
     def avatar(self):
         result = self.profile.with_entities(Profile.avatar).first()
@@ -36,6 +43,22 @@ class User(db.Model, UserMixin):
             return result[0]
 
         return current_app.config['DEFAULT_AVATAR']
+
+
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20))
+    role = db.relationship('UserRole', backref='role', lazy='dynamic')
+
+    def __repr__(self):
+        return f'<Role {self.id} - {self.name}>'
+
+
+class UserRole(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
+
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
