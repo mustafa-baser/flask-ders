@@ -57,7 +57,7 @@
 
         <ul class="navbar-nav ms-auto">
 
-            <li class="nav-item dropdown">
+            <li class="nav-item">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {% if current_user.is_authenticated %}
                   <img src="data:image/png;base64, {{current_user.avatar}}" alt="Avatar" style="width:30px;" class="rounded-pill"> 
@@ -66,15 +66,15 @@
                   
                 {% endif %}
               </a>
-              <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 {% if current_user.is_authenticated %}
-                  <li><a class="dropdown-item" href="{{url_for('auth.profil')}}">Profil</a></li>
-                  <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Çıkış</a></li>
+                  <a class="dropdown-item" href="{{url_for('auth.profil')}}">Profil</a>
+                  <li><a class="dropdown-item" href="{{url_for('auth.logout')}}">Çıkış</a>
                 {% else %}
-                  <li><a class="dropdown-item" href="{{url_for('auth.login')}}">Giriş</a></li>
-                  <li><a class="dropdown-item" href="{{url_for('auth.register')}}">Kayıtlan</a></li>
+                  <a class="dropdown-item" href="{{url_for('auth.login')}}">Giriş</a>
+                  <a class="dropdown-item" href="{{url_for('auth.register')}}">Kayıtlan</a>
                 {% endif %}
-              </ul>
+              </div>
             </li>
 
         </ul>
