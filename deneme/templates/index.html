@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>{{baslik}} - Microblog</title>
+    </head>
+    <body>
+        <h1>Merhaba, {{ kullanici.adi }} - {{ kullanici.soyadi }}!</h1>
+        Şu an saat <font color="#ff0000">{{saat}}</font>
+        <h2>İletiler</h2>
+        {% for ileti in iletiler %}
+          <br>{{ileti['yazar']['adi']}} dediki <i>{{ileti['ileti']}}</i> 
+        {% endfor %}
+    </body>
+</html>
