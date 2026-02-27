@@ -3,6 +3,7 @@ import sqlite3
 
 from flask import Flask
 from flask import render_template
+from flask import request, redirect
 
 app = Flask(__name__)
 
@@ -45,6 +46,25 @@ def kullanicilar():
             'kullanicilar.html',
             baslik="Kullanıcılar",
             kullanicilar=users
+            )
+
+
+@app.route('/kullaniciekle', methods=["GET", "POST"])
+def kullaniciekle():
+
+    if request.method == 'POST':
+        con = sqlite3.connect("microblog.sqlite3")
+        cur = con.cursor()
+        username = request.form["username"]
+        email = request.form["email"]
+        cur.execute(f"insert into users ('username', 'email') values ('{username}', '{email}');")
+        con.commit()
+        con.close()
+        return redirect("/kullanicilar")
+    
+    return render_template(
+            'kullaniciekle.html',
+            baslik="Kullanıcı ekleme formu",
             )
 
 app.run(debug=True)
