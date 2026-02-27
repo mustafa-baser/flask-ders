@@ -1,9 +1,0 @@
-{% from 'bootstrap5/form.html' import render_form %}
-
-{% extends "base.html" %}
-
-{% block icerik %}
-    <h2>Giriş</h2>
-    {{render_form(form)}}
-<center><p>Kayıtlı değilseniz <a href="{{url_for('auth.register')}}">buradan</a> kayıt olabilirsiniz</p></center>
-{% endblock %}

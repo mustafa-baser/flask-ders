@@ -1,9 +1,0 @@
-{% from 'bootstrap5/form.html' import render_form %}
-
-{% extends "base.html" %}
-
-{% block icerik %}
-    <h2>{%if title %}{{title}}{%else%}Yeni ileti{%endif%}</h2>
-    {{render_form(form)}}
-
-{% endblock %}
