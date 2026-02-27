@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>{% if baslik %}  {{baslik}} {% else %} Ana Sayfa {% endif %} - Microblog</title>
+    </head>
+    <body>
+        <h1>Sistemdeki Kullanıcılar</h1>
+
+        <table border="1">
+        <tr><th>ID</th><th>Kullanıcı Adı</th><th>E-Posta</th></tr>
+        {% for kullanici in kullanicilar %}
+          <tr><td>{{kullanici[0]}}</td><td>{{kullanici[1]}}</td><td>{{kullanici[2]}}</td></tr>
+        {% endfor %}
+
+</table>
+    </body>
+</html>

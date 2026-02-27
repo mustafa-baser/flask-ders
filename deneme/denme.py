@@ -1,4 +1,6 @@
 import time
+import sqlite3
+
 from flask import Flask
 from flask import render_template
 
@@ -28,6 +30,21 @@ def index():
             saat='16:07',
             baslik="Giriş Sayfası",
             iletiler=iletiler
+            )
+
+@app.route('/kullanicilar')
+def kullanicilar():
+    con = sqlite3.connect("microblog.sqlite3")
+    cur = con.cursor()
+    cur.execute("select * from users;")
+    users = cur.fetchall()
+
+    con.close()
+
+    return render_template(
+            'kullanicilar.html',
+            baslik="Kullanıcılar",
+            kullanicilar=users
             )
 
 app.run(debug=True)
