@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>{{baslik}} - Microblog</title>
+        <title>{% if baslik %}  {{baslik}} {% else %} Ana Sayfa {% endif %} - Microblog</title>
     </head>
     <body>
         <h1>Merhaba, {{ kullanici.adi }} - {{ kullanici.soyadi }}!</h1>
