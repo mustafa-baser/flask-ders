@@ -5,7 +5,16 @@ from flask import Flask
 from flask import render_template
 from flask import request, redirect
 
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+
+class KullaniciEkleForm(FlaskForm):
+    username = StringField('Kullanıcı Adı')
+    email =  StringField('E-Posta Adresi')
+    submit = SubmitField('Gönder')
+
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'ksjkcndhdksnb'
 
 @app.route('/')
 def index():
@@ -52,19 +61,22 @@ def kullanicilar():
 @app.route('/kullaniciekle', methods=["GET", "POST"])
 def kullaniciekle():
 
+    form = KullaniciEkleForm()
+
     if request.method == 'POST':
         con = sqlite3.connect("microblog.sqlite3")
         cur = con.cursor()
-        username = request.form["username"]
-        email = request.form["email"]
+        username = form.username.data
+        email = form.email.data
         cur.execute(f"insert into users ('username', 'email') values ('{username}', '{email}');")
         con.commit()
         con.close()
         return redirect("/kullanicilar")
-    
+
     return render_template(
             'kullaniciekle.html',
             baslik="Kullanıcı ekleme formu",
+            form=form
             )
-
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

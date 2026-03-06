@@ -5,12 +5,11 @@
     <body>
         <h1>Kullanıcı Ekleme Formu</h1>
 
-
         <form method="POST">
-        <br>Kullanıcı adı <input name="username" type="text">
-        <br>E-Posta Adresi <input name="email" type="text">
-        <br><input type="submit" value="Gönder">
-        
+            {{ form.csrf_token }}
+        <br>{{form.username.label}} {{form.username()}}
+        <br>{{form.email.label}} {{form.email()}}
+        <br>{{form.submit()}}
         </form>
 
 </table>
