@@ -86,5 +86,15 @@ def kullaniciekle():
             baslik="Kullanıcı ekleme formu",
             form=form
             )
+
+@app.route('/kullanicisil')
+def kullanicisil():
+    sil_id = request.args.get('id')
+    user = Users.query.get(int(sil_id))
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/kullanicilar")
+
 if __name__ == '__main__':
     app.run(debug=True)
