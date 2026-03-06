@@ -7,6 +7,7 @@ from flask import request, redirect
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
+from flask_sqlalchemy import SQLAlchemy
 
 class KullaniciEkleForm(FlaskForm):
     username = StringField('Kullanıcı Adı')
@@ -15,6 +16,19 @@ class KullaniciEkleForm(FlaskForm):
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ksjkcndhdksnb'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///microblog.sqlite3"
+
+
+db = SQLAlchemy()
+db.init_app(app)
+
+
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String)
+    email = db.Column(db.String)
+
+
 
 @app.route('/')
 def index():
@@ -43,13 +57,8 @@ def index():
             )
 
 @app.route('/kullanicilar')
-def kullanicilar():
-    con = sqlite3.connect("microblog.sqlite3")
-    cur = con.cursor()
-    cur.execute("select * from users;")
-    users = cur.fetchall()
-
-    con.close()
+def kullanicilar():    
+    users = Users.query.all()
 
     return render_template(
             'kullanicilar.html',
@@ -64,13 +73,12 @@ def kullaniciekle():
     form = KullaniciEkleForm()
 
     if request.method == 'POST':
-        con = sqlite3.connect("microblog.sqlite3")
-        cur = con.cursor()
-        username = form.username.data
-        email = form.email.data
-        cur.execute(f"insert into users ('username', 'email') values ('{username}', '{email}');")
-        con.commit()
-        con.close()
+        user = Users()
+        user.username = form.username.data
+        user.email = form.email.data
+        db.session.add(user)
+        db.session.commit()
+
         return redirect("/kullanicilar")
 
     return render_template(
