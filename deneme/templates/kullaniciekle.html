@@ -1,8 +1,6 @@
-<html>
-    <head>
-        <title>{% if baslik %}  {{baslik}} {% else %} Ana Sayfa {% endif %} - Microblog</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+
+{% block icerik %}
         <h1>Kullanıcı Ekleme Formu</h1>
 
         <form method="POST">
@@ -12,6 +10,4 @@
         <br>{{form.submit()}}
         </form>
 
-</table>
-    </body>
-</html>
+{% endblock %}

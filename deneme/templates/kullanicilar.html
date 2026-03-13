@@ -1,8 +1,6 @@
-<html>
-    <head>
-        <title>{% if baslik %}  {{baslik}} {% else %} Ana Sayfa {% endif %} - Microblog</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+
+{% block icerik %}
         <h1>Sistemdeki Kullanıcılar</h1>
 
         <table border="1">
@@ -11,6 +9,4 @@
           <tr><td>{{kullanici.id}}</td><td>{{kullanici.username}}</td><td>{{kullanici.email}}</td><td><a href="{{url_for('auth.kullanicisil', id=kullanici.id)}}">Sil</a></td></tr>
         {% endfor %}
 
-</table>
-    </body>
-</html>
+{% endblock %}

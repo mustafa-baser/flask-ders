@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>{% if baslik %}  {{baslik}} {% else %} Ana Sayfa {% endif %} - Microblog</title>
+    </head>
+    <body>
+
+    <a href="/">Ana Sayfa</a> | <a href="{{url_for('auth.kullanicilar')}}">Kullanıcılar</a> | <a href="{{url_for('auth.kullaniciekle')}}">Kullanıcı Ekle</a>
+    <hr>
+
+    {% block icerik %}{% endblock %}
+
+    <hr>
+    <center>OMÜ BÖTE Web Araçları ile Veri Yönetimi Dersi</center>
+    </body>
+</html>
