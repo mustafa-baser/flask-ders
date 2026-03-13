@@ -8,7 +8,7 @@
         <table border="1">
         <tr><th>ID</th><th>Kullanıcı Adı</th><th>E-Posta</th></tr>
         {% for kullanici in kullanicilar %}
-          <tr><td>{{kullanici.id}}</td><td>{{kullanici.username}}</td><td>{{kullanici.email}}</td><td><a href="/kullanicisil?id={{kullanici.id}}">Sil</a></td></tr>
+          <tr><td>{{kullanici.id}}</td><td>{{kullanici.username}}</td><td>{{kullanici.email}}</td><td><a href="{{url_for('auth.kullanicisil', id=kullanici.id)}}">Sil</a></td></tr>
         {% endfor %}
 
 </table>
