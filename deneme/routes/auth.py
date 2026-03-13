@@ -20,7 +20,7 @@ def kullanicilar():
     users = Users.query.all()
 
     return render_template(
-            'kullanicilar.html',
+            'auth/kullanicilar.html',
             baslik="Kullanıcılar",
             kullanicilar=users
             )
@@ -41,7 +41,7 @@ def kullaniciekle():
         return redirect(url_for('auth.kullanicilar'))
 
     return render_template(
-            'kullaniciekle.html',
+            'auth/kullaniciekle.html',
             baslik="Kullanıcı ekleme formu",
             form=form
             )
