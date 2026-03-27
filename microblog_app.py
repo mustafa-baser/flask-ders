@@ -1,4 +1,4 @@
-from sample.application import create_app
+from microblog.application import create_app
 
 app = create_app()
 
