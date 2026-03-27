@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>{{ title }} - Microblog</title>
+    </head>
+    <body>
+        <h1>Merhaba, {{ user.username }} [{{ user.email }}] !</h1>
+        
+    <h2>Son iletilerim</h2>
+   <ul> 
+    {% for post in posts %}
+       <li> {{post.body}} - {{post.timestamp}}
+    {% endfor %}
+    </ul>
+    </body>
+</html>

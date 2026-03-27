@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
 from microblog.models import User
 
 index_bp = Blueprint('index', __name__)
@@ -6,6 +6,8 @@ index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def index():
-    u = User.query.first()
-    return "Merhaba {} - {} : {}".format(u.username, u.email, u.posts.first().body)
+    user = User.query.first()
+    posts = user.posts.all()
+
+    return render_template('index/index.html', user=user, posts=posts)
 
