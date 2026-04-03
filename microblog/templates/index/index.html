@@ -3,13 +3,24 @@
         <title>{{ title }} - Microblog</title>
     </head>
     <body>
-        <h1>Merhaba, {{ user.username }} [{{ user.email }}] !</h1>
-        
+        {% if current_user.is_anonymous %}
+            <h1>Merhaba, Misafir Kullanıcı </h1>
+        {% else %}
+        <h1>Merhaba, {{ current_user.username }} [{{ current_user.email }}] !</h1>
+        {% endif %}
+
+
+{% if current_user.is_authenticated %}
     <h2>Son iletilerim</h2>
    <ul> 
-    {% for post in posts %}
+    {% for post in current_user.posts %}
        <li> {{post.body}} - {{post.timestamp}}
     {% endfor %}
     </ul>
+{% else %}
+
+   Giriş yapmak için <a href="{{url_for('auth.login')}}">tıklayın</a> 
+
+{% endif %}
     </body>
 </html>
