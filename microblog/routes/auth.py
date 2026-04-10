@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user
 
 from microblog.models import User
@@ -13,13 +13,12 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
+            flash("Giriş başarılı")
             return redirect(url_for('index.index'))
 
-        else:
-            return "Kullanıcı adı yada parolası yanlış"
-        return "Giriş işlemi yapılacak"
-    else:
-        return render_template('auth/login.html', form=form)
+        flash("Kullanıcı adı yada parolası yanlış")
+
+    return render_template('auth/login.html', form=form)
 
 
 @auth_bp.route('/logout')

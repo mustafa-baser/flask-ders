@@ -7,7 +7,5 @@ index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/')
 def index():
-    print(current_user)
-
     return render_template('index/index.html')
 

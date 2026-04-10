@@ -1,8 +1,6 @@
-<html>
-    <head>
-        <title>{{ title }} - Microblog</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
+
+{% block body %}
         {% if current_user.is_anonymous %}
             <h1>Merhaba, Misafir Kullanıcı </h1>
         {% else %}
@@ -22,5 +20,5 @@
    Giriş yapmak için <a href="{{url_for('auth.login')}}">tıklayın</a> 
 
 {% endif %}
-    </body>
-</html>
+
+{% endblock %}
