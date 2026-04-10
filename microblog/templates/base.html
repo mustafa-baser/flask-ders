@@ -1,5 +1,6 @@
 <html>
     <head>
+        {{ bootstrap.load_css() }}
         <title>{{ title }} - Microblog</title>
     </head>
     <body>
@@ -14,10 +15,11 @@
       {% endif %}
     {% endwith %}
 
-    <a href="/">Ana sayfa</a> | {% if current_user.is_authenticated %} <a href="{{url_for('auth.logout')}}">Çıkış</a>  {% else %} <a href="{{url_for('auth.login')}}">Giriş</a> {% endif %}
+    <a href="/">Ana sayfa</a> | {% if current_user.is_authenticated %} <a href="{{url_for('auth.logout')}}">Çıkış</a>  {% else %} <a href="{{url_for('auth.login')}}">Giriş</a> | <a href="{{url_for('auth.register')}}">Kayıt Ol</a> {% endif %}
 
     {% block body %}
     {% endblock %}
 
+    {{ bootstrap.load_js() }}
     </body>
 </html>

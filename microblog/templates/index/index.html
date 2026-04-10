@@ -4,7 +4,7 @@
         {% if current_user.is_anonymous %}
             <h1>Merhaba, Misafir Kullanıcı </h1>
         {% else %}
-        <h1>Merhaba, {{ current_user.username }} [{{ current_user.email }}] !</h1>
+        <h1>Merhaba, {{ current_user.name }}  {{ current_user.lastname }}!</h1>
         {% endif %}
 
 
