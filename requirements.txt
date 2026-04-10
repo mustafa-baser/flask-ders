@@ -5,3 +5,4 @@ flask-wtf
 bootstrap-flask
 flask-migrate
 email-validator
+bootstrap-flask

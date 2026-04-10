@@ -9,10 +9,18 @@
 
 
 {% if current_user.is_authenticated %}
-    <h2>Son iletilerim</h2>
+    <h2>Blogdaki son beş ileti</h2>
+
    <ul> 
-    {% for post in current_user.posts %}
-       <li> {{post.body}} - {{post.timestamp}}
+    {% for post in posts %}
+       <li> {{post.body}} - {{post.timestamp}} [{{post.author.name}} {{post.author.lastname}}]
+       <ul>
+       {% for comment in post.comments %}
+           <li>{{comment.body}}  - {{comment.timestamp}}</li>
+       {% endfor %}
+       
+       
+       </ul>
     {% endfor %}
     </ul>
 {% else %}
