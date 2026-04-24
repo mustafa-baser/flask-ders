@@ -28,3 +28,7 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(email=field.data).first()
         if user:
             raise validators.ValidationError("Bu e-posta adresi ile başka bir kullanıcı kayıtlı.")
+
+class PostForm(FlaskForm):
+    body = TextAreaField("İleti", validators=[validators.InputRequired(message="Bu alan boş bırakılamaz")], render_kw={"rows": 5})
+    submit = SubmitField("Gönder")

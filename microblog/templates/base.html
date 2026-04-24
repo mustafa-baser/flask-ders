@@ -1,25 +1,79 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         {{ bootstrap.load_css() }}
         <title>{{ title }} - Microblog</title>
     </head>
     <body>
+<div class="container">
+
+
+
+
+
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         <ul class=flashes>
         {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
+<div class="toast-container position-fixed top-0 end-0 p-3">
+        <div class="toast align-items-center text-bg-{{category}}" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
+          <div class="d-flex">
+            <div class="toast-body">
+              {{message}}
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+</div>
         {% endfor %}
         </ul>
       {% endif %}
     {% endwith %}
 
-    <a href="/">Ana sayfa</a> | {% if current_user.is_authenticated %} <a href="{{url_for('auth.logout')}}">Çıkış</a>  {% else %} <a href="{{url_for('auth.login')}}">Giriş</a> | <a href="{{url_for('auth.register')}}">Kayıt Ol</a> {% endif %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: #e3f2fd;">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link {% if request.endpoint == 'index.index' %} active disabled{% endif %}" aria-current="page" href="{{url_for('index.index')}}">Ana sayfa</a>
+        <a class="nav-link {% if request.endpoint == 'post.create' %} active disabled{% endif %}"  href="{{url_for('post.create')}}">İleti Oluştur</a>
+        {% if current_user.is_authenticated %}
+          <a class="nav-link" href="{{url_for('auth.logout')}}">Çıkış</a>
+        {% else %}
+          <a class="nav-link {% if request.endpoint == 'auth.login' %} active disabled{% endif %}" href="{{url_for('auth.login')}}">Giriş</a>
+          <a class="nav-link {% if request.endpoint == 'auth.register' %} active disabled{% endif %}" href="{{url_for('auth.register')}}">Kayıt Ol</a> 
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+    </nav>
 
     {% block body %}
+    
     {% endblock %}
+    </div>
 
     {{ bootstrap.load_js() }}
+    
+    <script>
+        const toastLiveExample = document.getElementById('liveToast')
+
+        if (toastLiveExample) {
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            toastBootstrap.show()
+        }
+    
+    
+    </script>
+    
+    
     </body>
 </html>

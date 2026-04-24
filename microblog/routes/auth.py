@@ -13,10 +13,10 @@ def login():
         user = User.query.filter_by(username=form.username.data).first() or User.query.filter_by(email=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            flash("Giriş başarılı")
+            flash("Giriş başarılı", 'success')
             return redirect(url_for('index.index'))
 
-        flash("Kullanıcı adı yada parolası yanlış")
+        flash("Kullanıcı adı yada parolası yanlış", 'danger')
 
     return render_template('auth/login.html', form=form)
 
@@ -44,7 +44,7 @@ def register():
         db.session.commit()
         user.set_password(password)
 
-        flash("Kullanıcı kayıtlanması tamam. Giriş yapabilirsiniz.")
+        flash("Kullanıcı kayıtlanması tamam. Giriş yapabilirsiniz.", 'success')
         return redirect(url_for('auth.login'))
 
 
