@@ -1,0 +1,15 @@
+{% from 'bootstrap5/form.html' import render_form %}
+{% extends 'base.html' %}
+
+{% block body %}
+        <h2>Aşağıdaki İletiye Yorum Yazınız</h2>
+        <div class="card">
+        <div class="card-body">
+        {{post.body}}
+        </div>
+        </div>
+        <form method="POST">
+            {{ render_form(form) }}
+        </form>
+
+{% endblock %}

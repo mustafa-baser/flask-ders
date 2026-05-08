@@ -1,0 +1,17 @@
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% extends 'base.html' %}
+
+{% block body %}
+        <h2>Profiliniz</h2>
+        <form class="form" method="POST" enctype="multipart/form-data">
+            
+            <div>
+                <img src="data:image/png;base64, {{profile.avatar}}">
+            </div>
+
+            
+
+          {{ render_form(form) }}
+        </form>
+{% endblock %}

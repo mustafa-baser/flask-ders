@@ -8,5 +8,5 @@ index_bp = Blueprint('index', __name__)
 @index_bp.route('/')
 def index():
     posts = Post.query.order_by(Post.timestamp.desc()).limit(5).all()
-    return render_template('index/index.html', posts=posts)
+    return render_template('index/index.html', title="Ana Sayfa", posts=posts)
 

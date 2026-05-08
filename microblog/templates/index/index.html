@@ -11,18 +11,26 @@
 {% if current_user.is_authenticated %}
     <h2>Blogdaki son beş ileti</h2>
 
-   <ul> 
     {% for post in posts %}
-       <li> {{post.body}} - {{post.timestamp}} [{{post.author.name}} {{post.author.lastname}}]
-       <ul>
-       {% for comment in post.comments %}
-           <li>{{comment.body}}  - {{comment.timestamp}}</li>
-       {% endfor %}
-       
-       
-       </ul>
+
+    <div class="card">
+      <div class="card-header">{{post.author.name}} {{post.author.lastname}} 
+         <a href="{{url_for('post.comment', id=post.id)}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+           <path d="M5.921 11.9 1.353 8.62a.72.72 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+         </svg></a>
+         <div class="float-end">{{post.timestamp.replace(microsecond=0)}}</div></div>
+      <div class="card-body">
+        <p class="card-text">{{post.body}}</p>
+        
+               {% for comment in post.comments %}
+           <li> <i>{{comment.body}}  - {{comment.timestamp.replace(microsecond=0)}} [{{comment.author.name}} {{comment.author.lastname}}]</i></li>
+           {% endfor %}
+        
+      </div>
+    </div>
+    <br>
     {% endfor %}
-    </ul>
+
 {% else %}
 
    Giriş yapmak için <a href="{{url_for('auth.login')}}">tıklayın</a> 

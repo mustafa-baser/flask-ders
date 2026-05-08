@@ -1,5 +1,7 @@
+from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField, validators
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField, DateField, validators
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from microblog.models import User
 # formları burada oluşturun
 
@@ -32,3 +34,21 @@ class RegisterForm(FlaskForm):
 class PostForm(FlaskForm):
     body = TextAreaField("İleti", validators=[validators.InputRequired(message="Bu alan boş bırakılamaz")], render_kw={"rows": 5})
     submit = SubmitField("Gönder")
+
+class CommentForm(FlaskForm):
+    body = TextAreaField("Yorum", validators=[validators.InputRequired(message="Bu alan boş bırakılamaz")], render_kw={"rows": 5})
+    submit = SubmitField("Gönder")
+
+class ProfileForm(FlaskForm):
+    avatar = FileField('Resim', validators=[FileAllowed(['jpg', 'png'], 'Sadece resim!')])
+    name = StringField("Adı")
+    lastname = StringField("Soyadı")
+    about = StringField("Hakkında")
+    birthdate = DateField("Doğum Tarihi", validators=[validators.InputRequired(message="Bu alan boş bırakılamaz")])
+    submit = SubmitField("Kaydet")
+
+class AvatarForm(FlaskForm):
+    avatar = FileField('Resim', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Sadece resim!')])
+    submit = SubmitField('Yükle')
+
+
