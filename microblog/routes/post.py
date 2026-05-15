@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from microblog.models import db, Post, Comment
 from microblog.forms import PostForm, CommentForm
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 post_bp = Blueprint('post', __name__)
 
-
 @post_bp.route('/create', methods=['get', 'post'])
+@login_required
 def create():
     form = PostForm()
     if request.method == 'POST' and form.validate():
@@ -20,6 +20,7 @@ def create():
 
 
 @post_bp.route('/comment', methods=['get', 'post'])
+@login_required
 def comment():
     form = CommentForm()
     post_id = request.args.get('id', int)

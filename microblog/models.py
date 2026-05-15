@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
-    profile = db.relationship('Profile', backref='user', lazy='dynamic')
+    profile = db.relationship('Profile', backref='user', uselist=False)
 
     def set_password(self, pwd):
         self.password_hash = generate_password_hash(pwd)

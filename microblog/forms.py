@@ -40,7 +40,7 @@ class CommentForm(FlaskForm):
     submit = SubmitField("Gönder")
 
 class ProfileForm(FlaskForm):
-    avatar = FileField('Resim', validators=[FileAllowed(['jpg', 'png'], 'Sadece resim!')])
+    avatar = FileField('Resim', validators=[FileAllowed(['jpeg', 'gif', 'jpg', 'png'], 'Sadece resim!')])
     name = StringField("Adı")
     lastname = StringField("Soyadı")
     about = StringField("Hakkında")
@@ -48,7 +48,7 @@ class ProfileForm(FlaskForm):
     submit = SubmitField("Kaydet")
 
 class AvatarForm(FlaskForm):
-    avatar = FileField('Resim', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Sadece resim!')])
+    avatar = FileField('Resim', validators=[FileRequired(), FileAllowed(['jpeg', 'gif', 'jpg', 'png'], 'Sadece resim!')])
     submit = SubmitField('Yükle')
 
 

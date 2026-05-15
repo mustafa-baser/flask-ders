@@ -33,7 +33,8 @@
 
 {% else %}
 
-   Giriş yapmak için <a href="{{url_for('auth.login')}}">tıklayın</a> 
+   Giriş yapmak için <a href="{{url_for('auth.login')}}">tıklayın</a>.
+   Üye değilseniz, <a href="{{url_for('auth.register')}}">buradan</a> olabilirsiniz.
 
 {% endif %}
 

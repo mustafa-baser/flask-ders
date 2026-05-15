@@ -14,3 +14,6 @@ def init_extensions(app):
     migrate.init_app(app)
     login.init_app(app)
     bootstrap.init_app(app)
+
+    login.login_view = "auth.login"
+    login.login_message = "Bu alana erişmek için giriş yapınız."
