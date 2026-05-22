@@ -1,0 +1,46 @@
+{% from 'bootstrap5/form.html' import render_form %}
+{% extends 'base.html' %}
+
+{% block body %}
+        <h2>İleti Sayısı</h2>
+        Aşağıdaki Kullanıcılara Günlül İleti Sayısı Giriniz
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Kullanıcı Adı</th>
+              <th scope="col">Adı</th>
+              <th scope="col">Soyadı</th>
+              <th scope="col">Limit</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for user in users %}
+              <br>
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.lastname }}</td>
+              <td><input id="{{user.id}}" name="ileti-sayisi-{{user.id}}" type="number" value={{user.daily_message_number}} onchange="myFunction({{user.id}})"></input></td>
+            </tr>
+            {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+<script>
+
+function myFunction(userid) {
+    mnumber = myValue = document.getElementById(userid).value;
+    
+    url = "{{url_for('post.change_message_number')}}";
+    fetch(url+'?userid='+userid+'&mnumber='+mnumber);
+    
+    }
+
+
+</script>
+
+{% endblock %}

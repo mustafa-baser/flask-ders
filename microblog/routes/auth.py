@@ -1,11 +1,26 @@
 import base64
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from functools import wraps
+
+from flask import Blueprint, render_template, request, redirect, url_for, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
 from microblog.models import db, User, Profile
+from microblog.extensions import login
 from microblog.forms import LoginForm, RegisterForm, ProfileForm, AvatarForm
 
 auth_bp = Blueprint('auth', __name__)
+
+
+def role_required(role):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not current_user.has_role(role):
+                abort(403)
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
 
 @auth_bp.route('/login', methods=["GET", "POST"])
 def login():

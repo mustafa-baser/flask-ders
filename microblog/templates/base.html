@@ -44,7 +44,12 @@
       <div class="navbar-nav">
         <a class="nav-link {% if request.endpoint == 'index.index' %} active disabled{% endif %}" aria-current="page" href="{{url_for('index.index')}}">Ana sayfa</a>
         <a class="nav-link {% if request.endpoint == 'post.create' %} active disabled{% endif %}"  href="{{url_for('post.create')}}">İleti Oluştur</a>
+
         {% if current_user.is_authenticated %}
+          {% if current_user.has_role('admin') %}
+            <a class="nav-link {% if request.endpoint == 'post.messagenumber' %} active disabled{% endif %}"  href="{{url_for('post.messagenumber')}}">Günlük İleti Sayısı</a>
+          {% endif %}
+
           <a class="nav-link" href="{{url_for('auth.profile')}}">Profil</a>
           <a class="nav-link" href="{{url_for('auth.logout')}}">Çıkış</a>
         {% else %}
